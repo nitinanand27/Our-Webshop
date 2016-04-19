@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MAN- the shop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body class="has-drawer">
+    <div id="drawerExample" class="drawer dw-xs-10 dw-sm-6 dw-md-4 fold" aria-labelledby="drawerExample">
+        <div class="drawer-controls">
+
+            @if (User.Identity.Name != "admin@admin.com" && User.Identity.IsAuthenticated)
+            {
+                <a href="#drawerExample" data-toggle="drawer" aria-foldedopen="false" aria-controls="drawerExample" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-cog"></span></a>
+                <a href="/Kundvagn/Index">
+                    <span class="glyphicon glyphicon-shopping-cart badge">@Session["CartCount"]</span></a>              
+            }
+            else
+            {
+                <a href="#drawerExample" data-toggle="drawer" aria-foldedopen="false" aria-controls="drawerExample" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-cog"></span></a>
+
+            }
+        </div>
+        <div class="drawer-contents" style="background-color:darkgoldenrod">
+            <div class="drawer-heading">
+                <h2 class="drawer-title">Menu</h2>
+
+            </div>
+            <div class="drawer-body">
+                <p>
+
+                    Här finns allt en riktig Man behöver!!!
+                </p>
+
+            </div>
+            <ul class="drawer-nav">
+                <li>
+                    <form method="post" action="/Produkt/Index">
+                        <div class="form-group">
+                            <input name="search" id="searchbar" type="text" class="form-control" placeholder="sök produkt här">
+                        </div>
+                        <button id="search-btn" class="btn btn-default" type="submit">Sök</button>
+                    </form>
+                </li>
+                <li>@Html.ActionLink("Hem", "Index", "Home")</li>
+                <li>@Html.ActionLink("Produkter", "Index", "Produkt")</li>
+                <li>@Html.ActionLink("Kontakta Oss", "Contact", "Home")</li>             
+                <li>@Html.Partial("_LoginPartial")</li>
+            </ul>
+
+            <div class="drawer-footer">
+                <small>&copy; The Man</small>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("MAN", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Hem", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Produkter", "Index", "Produkt")</li>                    
+                    <li>@Html.ActionLink("Kontakta Oss", "Contact", "Home")</li>                 
+                </ul>
+
+                <form class="navbar-form navbar-left" method="post" action="/Produkt/Index">
+                    <div class="form-group">
+                        <input name="search" id="searchbar" type="text" class="form-control" placeholder="sök produkt här">
+                    </div>
+                    <button id="search-btn" class="btn btn-default" type="submit">Sök</button>
+                </form>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - MAN AB Sverige</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

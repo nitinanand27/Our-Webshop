@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MyWebshop.Models.Produkter>
+
+@{
+    ViewBag.Title = "CRUD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ADMIN</h2>
+
+<p>
+    @Html.ActionLink("Skapa Nytt", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Namn
+        </th>
+        <th>
+            Pris
+        </th>
+        <th>
+            Antal i Lager
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @item.Namn
+        </td>
+        <td>
+            @item.Pris
+        </td>
+        <td>
+            @item.Antal
+        </td>
+
+        <td>
+            <form method="post" action="/Admin/Edit/@item.ID">
+                <input type="hidden" value="@item.ID" name="name"/>
+                <input type="submit" value="Edit" />
+            </form>
+
+            <form method="post" action="/Admin/Delete/@item.ID">
+                <input type="hidden" value="@item.ID" name="name" />
+                <input type="submit" value="Ta Bort" />
+            </form>
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    <p>Tillbaka till Produkt <a href="/Produkt/"> Lista</a></p>
+</div>
+

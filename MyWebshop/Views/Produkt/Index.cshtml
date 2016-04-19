@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MyWebshop.Models.Produkter>
+
+@{
+    ViewBag.Title = "Produkter";
+}
+
+<h2>Produkter</h2>
+
+<div class="container">
+
+    <div id="products" class="row list-group">
+
+        @foreach (var item in Model)
+        {
+            <div class="item  col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail">
+
+                    <img class="group list-group-image img-responsive" src="@item.Image" alt="BILD KOMMER IMORGON" />
+
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            @item.Namn
+                        </h4>
+                        <div class="row">
+                            <ul>
+                                <li><p style="font-size: 14px" class="lead">Pris/st: @item.Pris kr</p></li>
+                                <li><p style="font-size: 14px" class="lead">I lager: @item.Antal styck</p></li>
+                                <li>
+                                    @if (Request.IsAuthenticated)
+                                {
+
+                                    <form method="post" action="/Kundvagn/Index">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" value="@item.Namn" name="product" />
+                                        <input class="form-controlCart" type="submit" name="addToCart" value="Lägg i kundvagn" />
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" action="/Account/Login">
+                                        @Html.AntiForgeryToken()
+                                        <input class="form-controlCart" type="submit" name="addToCart" value="Lägg i kundvagn" />
+                                    </form>
+                                }
+                                </li>
+                            </ul>                       
+                            </div>
+                        </div>
+                    </div>
+
+               </div>
+        }
+    </div>
+</div>

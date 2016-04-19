@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "logutTest" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="logutTest drawer-nav">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            @if (User.Identity.GetUserName() == "admin@admin.com")
+            {
+                <li>@Html.ActionLink("Admin", "Manage", "Admin")</li>
+
+            }
+            else
+            {
+                @*KUNDVAGN ICON IN THE MENU*@
+                <li>
+                    <a href="/Kundvagn/Index">
+                        <span class="glyphicon glyphicon-shopping-cart badge">@Session["CartCount"]</span> Kundvagn
+                    </a>
+
+                </li>
+
+            }
+
+        </ul>
+    }
+}
+else
+{
+    <ul class="drawer-nav">
+        <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

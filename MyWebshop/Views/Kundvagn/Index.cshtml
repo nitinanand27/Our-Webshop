@@ -1,0 +1,103 @@
+﻿@model MyWebshop.Models.Cart
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kundvagn</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Antal</th>
+                        <th class="text-center">Pris</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderRows)
+                    {
+                        <tr>
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="@item.Product.Image" style="width: 72px; height: 72px;"> </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">@item.Product.Namn</a></h4>
+                                        <h5 class="media-heading"> by <a href="#">Modell namn</a></h5>
+                                        <span>Status: </span><span class="text-success"><strong>I Lager</strong></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 col-md-1" style="text-align: center">
+
+                                <form action="/Kundvagn/UpdateAmount">
+                                    <input type="hidden" name="productName" value="@item.Product.Namn" />
+                                    <input type="number" min="1" max="@item.Product.Antal" class="form-control" value="@item.Amount" name="amount">
+                                    <button >Update</button>
+                                </form>
+
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>@item.SellingPrice</strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>@(item.SellingPrice * item.Amount) kr</strong></td>
+                            <td class="col-sm-1 col-md-1">
+
+                                <form method="post" action="/Kundvagn/Delete">
+                                    <input type="hidden" value="@item.Product.Namn" name="rowToDelete" />                                   
+                                    <input class="form-control" type="submit" value="Ta Bort" />
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                   
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Summa</h5></td>
+                        <td class="text-right"><h5><strong>@Model.Total kr</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Frakt</h5></td>
+                        <td class="text-right"><h5><strong>0 kr</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>@Model.Total kr</strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                            <form action="/Produkt/Index" method="post">
+                                @*<input type="submit" name="forsättshoppaknapp" value="FortsättShoppa"
+                                       class="glyphicon glyphicon-shopping-cart btn btn-primary"/>*@
+                                <button type="submit" class="btn btn-primary">
+                                     Shoppa <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success">
+                                Checka ut <span class="glyphicon glyphicon-play"></span>
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>            
+        </div>
+    </div>
+</div>
